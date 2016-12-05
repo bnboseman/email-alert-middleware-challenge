@@ -7,6 +7,8 @@ const {logger} = require('./utilities/logger');
 // these are custom errors we've created
 const {FooError, BarError, BizzError} = require('./errors');
 
+const {emailErrorsMiddleware} = require('./middlewares/emailErrors');
+
 const app = express();
 
 // this route handler randomly throws one of `FooError`,
@@ -26,6 +28,7 @@ app.get('*', russianRoulette);
 // YOUR MIDDLEWARE FUNCTION should be activated here using
 // `app.use()`. It needs to come BEFORE the `app.use` call
 // below, which sends a 500 and error message to the client
+app.use(emailErrorsMiddleware);
 
 app.use((err, req, res, next) => {
   logger.error(err);
