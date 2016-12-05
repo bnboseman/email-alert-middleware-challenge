@@ -1,7 +1,7 @@
 const {sendEmail} = require('../emailer.js');
 
-const emailErrorsMiddleware = (error, request, response, next) => {
-  if (error.name == 'FooError' || error.name == 'BarError') {
+const emailErrorsMiddleware = (errorTypes) => (error, request, response, next) => {
+  if (errorTypes.includes(error.name)) {
     const data = {
       'FromEmail': 'bnboseman@gmail.com',
       'FromName': 'SERVICE ALERTS',
@@ -11,7 +11,7 @@ const emailErrorsMiddleware = (error, request, response, next) => {
     };
     sendEmail(data);
   }
-  return next();
+  next(error);
 };
 
 module.exports = {emailErrorsMiddleware};

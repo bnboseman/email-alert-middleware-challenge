@@ -28,7 +28,7 @@ app.get('*', russianRoulette);
 // YOUR MIDDLEWARE FUNCTION should be activated here using
 // `app.use()`. It needs to come BEFORE the `app.use` call
 // below, which sends a 500 and error message to the client
-app.use(emailErrorsMiddleware);
+app.use(emailErrorsMiddleware(['FooError','BarError']));
 
 app.use((err, req, res, next) => {
   logger.error(err);
